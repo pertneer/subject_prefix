@@ -118,38 +118,17 @@ $versions = array(
 
 		// Alter the database structure
 		'table_column_add' => array(
+			array(TOPICS_TABLE, 't_first_post_id', array('UINT', '0')),
 			array(TOPICS_TABLE, 'subject_prefix_id', array('UINT', '0'))
 		),
 
 		'table_index_add' => array(
-			array(TOPICS_TABLE, 'topic_first_post_id', 'topic_first_post_id'),
+			array(TOPICS_TABLE, 't_first_post_id', 't_first_post_id'),
 			array(TOPICS_TABLE, 'subject_prefix_id', 'subject_prefix_id'),
 		),
 	),
 	'1.2.0-rc1'	=> array(),	// No database changes
 	'1.2.0'		=> array(),	// No database changes
 	'1.2.1'		=> array(),	// No database changes
-	'1.2.2-b1'	=> array(), // No database changes
-	'1.2.2-rc1'	=> array(), // No database changes
-	'1.2.2-rc2'	=> array(), // No database changes
-	'1.2.2'		=> array(), // No database changes
-	'1.2.3'		=> array(
-		// Update auth string
-		'custom'	=> array(
-			'_alter_mcp_quick_edit_auth',
-		),
-	),
+	'1.2.3'		=> array(),	// No database changes
 );
-
-function _alter_mcp_quick_edit_auth($action, $version)
-{
-	global $umil;
-
-	// Only when updating
-	if ($action == 'update' && $version == '1.2.3')
-	{
-		// Set the new auth string
-		$new_auth_string = 'acl_m_subject_prefix,$id || (!$id && aclf_m_)';
-		$umil->db->sql_query('UPDATE ' . MODULES_TABLE . " SET module_auth = '{$new_auth_string}' WHERE module_basename = 'subject_prefix' AND module_mode = 'quick_edit'");
-	}
-}
