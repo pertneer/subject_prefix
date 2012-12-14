@@ -77,7 +77,7 @@ abstract class sp_core
 		$options = array("<option value='0'" . (($selected === false) ? " selected='selected'" : '') . '>' . sp_phpbb::$user->lang('SELECT_A_PREFIX') . '</option>');
 		foreach ($tree[$fid] as $prefix)
 		{
-			$options[] = "<option value='{$prefix['prefix_id']}'" . (($selected == $prefix['prefix_id']) ? " selected='selected'" : '') . " style='color: {$prefix['prefix_colour']};'>" . self::generate_prefix_string($prefix['prefix_id'], false) . '</option>';
+			$options[] = "<option value='{$prefix['prefix_id']}'" . (($selected == $prefix['prefix_id']) ? " selected='selected'" : '') . " style='color: #{$prefix['prefix_colour']};'>" . self::generate_prefix_string($prefix['prefix_id'], false) . '</option>';
 		}
 
 		return implode('', $options);
