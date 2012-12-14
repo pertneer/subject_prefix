@@ -392,17 +392,19 @@ abstract class sp_hook
 				$page_title = (strpos($page_title, '-') !== false) ? substr_replace($page_title, ' ' . $page_prefix, strpos($page_title, '-') + 1, 0) : $page_title;
 			}
 			sp_phpbb::$template->assign_var('PAGE_TITLE', $page_title);
-			sp_phpbb::$template->assign_var('PAGE_TITLE', $page_title);
 		}
 
 		// Add to the topic title
 		if (!empty(sp_phpbb::$template->_tpldata['.'][0]['TOPIC_TITLE']))
 		{
-			$topic_title	= sp_phpbb::$template->_tpldata['.'][0]['TOPIC_TITLE'];
-			$topic_prefix	= sp_core::generate_prefix_string($topic_data['subject_prefix_id']);
-			sp_phpbb::$template->assign_var('FEED_TOPIC_TITLE', $topic_title);		// A small fix for topic feeds (#11)
-			$topic_title = ($topic_prefix === false) ? $topic_title : $topic_prefix . ' ' . $topic_title;
-			sp_phpbb::$template->assign_var('TOPIC_TITLE', $topic_title);
+			if(strpos(sp_phpbb::$template->_tpldata['.'][0]['TOPIC_TITLE'], sp_core::generate_prefix_string($topic_data['subject_prefix_id'])) === false)
+			{
+				$topic_title	= sp_phpbb::$template->_tpldata['.'][0]['TOPIC_TITLE'];
+				$topic_prefix	= sp_core::generate_prefix_string($topic_data['subject_prefix_id']);
+				sp_phpbb::$template->assign_var('FEED_TOPIC_TITLE', $topic_title);		// A small fix for topic feeds (#11)
+				$topic_title = ($topic_prefix === false) ? $topic_title : $topic_prefix . ' ' . $topic_title;
+				sp_phpbb::$template->assign_var('TOPIC_TITLE', $topic_title);
+			}
 		}
 
 		// The quick MOD box
